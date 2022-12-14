@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'prometheus'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:8000']
+
+remote_write:
+  -
+    url: https://aps-workspaces.eu-central-1.amazonaws.com/workspaces/ws-bc3307b8-80c9-4497-842f-3834d81c13c0/api/v1/remote_write
+    queue_config:
+        max_samples_per_send: 1000
+        max_shards: 200
+        capacity: 2500
+    sigv4:
+         region: eu-central-1
+         
